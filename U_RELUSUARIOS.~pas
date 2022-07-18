@@ -1,0 +1,81 @@
+unit U_RELUSUARIOS;
+
+interface
+
+uses Windows, SysUtils, Messages, Classes, Graphics, Controls,
+  StdCtrls, ExtCtrls, Forms, QuickRpt, QRCtrls, FMTBcd, DB, SqlExpr;
+
+type
+  TQ_RELUSUARIOS = class(TQuickRep)
+    qrbndTitleBand1: TQRBand;
+    qrlbl1: TQRLabel;
+    qrsysdt2: TQRSysData;
+    qrbnd2: TQRBand;
+    qrshp6: TQRShape;
+    qrlbl17: TQRLabel;
+    qrlbl18: TQRLabel;
+    qrdbtxtFUNC_NOME: TQRDBText;
+    qrlbl20: TQRLabel;
+    qrdbtxtCLI_APELIDO: TQRDBText;
+    qrlbl2: TQRLabel;
+    qrdbtxtFUNC_FUNCAOID: TQRDBText;
+    qrlbl3: TQRLabel;
+    qrdbtxt2: TQRDBText;
+    qrbnd1: TQRBand;
+    qrsysdt1: TQRSysData;
+    QRLabel2: TQRLabel;
+    lblTotal: TQRLabel;
+    Qry_Usuarios: TSQLQuery;
+    Qry_UsuariosID_USUARIO: TIntegerField;
+    Qry_UsuariosNOME: TStringField;
+    Qry_UsuariosLOGIN: TStringField;
+    Qry_UsuariosSENHA: TStringField;
+    Qry_UsuariosNIVELACESSO: TIntegerField;
+    Qry_UsuariosDATACAD: TStringField;
+    Qry_UsuariosTIPOACESSO: TStringField;
+    imgLogoPMSP: TQRImage;
+    Qry_UsuariosORGAO: TStringField;
+    Qry_UsuariosCADASTRANTE: TStringField;
+    Qry_UsuariosSTATUS: TStringField;
+    QRLabel1: TQRLabel;
+    QRDBText2: TQRDBText;
+    QRLabel4: TQRLabel;
+    lblStatus: TQRDBText;
+    QRLabel5: TQRLabel;
+    QRDBText4: TQRDBText;
+    procedure qrbnd2BeforePrint(Sender: TQRCustomBand;
+      var PrintBand: Boolean);
+    procedure QuickRepBeforePrint(Sender: TCustomQuickRep;
+      var PrintReport: Boolean);
+  private
+
+  public
+
+  end;
+
+var
+  Q_RELUSUARIOS: TQ_RELUSUARIOS;
+
+implementation
+
+uses U_BIBLIOTECA, U_DM, U_DMPESQ, U_PRINCIPAL;
+
+{$R *.DFM}
+
+procedure TQ_RELUSUARIOS.qrbnd2BeforePrint(Sender: TQRCustomBand;
+  var PrintBand: Boolean);
+begin   
+    //mudando a cor do status de acordo com o valor da coluna
+    if (Qry_UsuariosSTATUS.Value = 'INATIVO')then
+         lblStatus.Font.Color:=clRed
+    else
+        lblStatus.Font.Color:=clBlue;
+end;
+
+procedure TQ_RELUSUARIOS.QuickRepBeforePrint(Sender: TCustomQuickRep;
+  var PrintReport: Boolean);
+begin
+ F_PRINCIPAL.Timer1.Enabled := True;
+end;
+
+end.
